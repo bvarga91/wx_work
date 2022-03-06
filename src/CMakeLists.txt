@@ -20,14 +20,16 @@ include(${wxWidgets_USE_FILE})
 
 if (APPLE)
     # create bundle on apple compiles
-    add_executable(main MACOSX_BUNDLE ${SRCS} )
+    add_executable(wx_cmake_template_core MACOSX_BUNDLE ${SRCS} mainwindow.cpp login.cpp)
+    target_include_directories(wx_cmake_template_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
     # Set a custom plist file for the app bundle - needed for Mac OS Retina display
-    set_target_properties(main PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist)
+    set_target_properties(wx_cmake_template_core PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist)
 else()
     # the WIN32 is needed for Windows in order for it to look for WinMain
     # instead of the main function. This is ignored on other systems,
     # so it works on all platforms
-    add_executable(main WIN32 ${SRCS})
+    add_executable(wx_cmake_template_core WIN32 ${SRCS} mainwindow.cpp login.cpp)
+    target_include_directories(wx_cmake_template_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 endif()
 
-target_link_libraries(main PRIVATE ${wxWidgets_LIBRARIES})
+target_link_libraries(wx_cmake_template_core PRIVATE ${wxWidgets_LIBRARIES})
